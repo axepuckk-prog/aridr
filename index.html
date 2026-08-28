@@ -144,14 +144,14 @@
             margin-top: 15px;
         }
 
-        /* Скрытый контейнер для видео YouTube */
-        #audioContainer {
-            display: none;
+        /* Прячем плеер за пределами видимости экрана */
+        #hiddenPlayerContainer {
             position: absolute;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-            opacity: 0;
+            top: -9999px;
+            left: -9999px;
+            width: 200px;
+            height: 200px;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -160,8 +160,10 @@
     <!-- Плывущий фон -->
     <div class="background-minions"></div>
 
-    <!-- Скрытый плеер YouTube для воспроизведения аудио -->
-    <div id="audioContainer"></div>
+    <!-- Скрытый плеер YouTube -->
+    <div id="hiddenPlayerContainer">
+        <div id="player"></div>
+    </div>
 
     <!-- Основной экран открытки -->
     <div class="container" id="mainCard">
@@ -200,19 +202,40 @@
         </div>
     </div>
 
+    <!-- Загружаем API YouTube -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         let yesScale = 1;
+        let ytPlayer;
+
+        // Инициализация API YouTube
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('player', {
+                height: '200',
+                width: '200',
+                videoId: 'HhHkAlMBabc',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'HhHkAlMBabc',
+                    'playsinline': 1
+                }
+            });
+        }
 
         function rejectGreeting() {
-            // Увеличиваем кнопку "Да"
             yesScale += 0.3;
             document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
         }
 
         function acceptGreeting() {
-            // Загружаем и запускаем скрытое видео YouTube со звуком
-            document.getElementById('audioContainer').innerHTML = 
-                '<iframe width="1" height="1" src="https://www.youtube.com/embed/HhHkAlMBabc?autoplay=1&loop=1&playlist=HhHkAlMBabc" frameborder="0" allow="autoplay"></iframe>';
+            // Запускаем звук через API при клике
+            if (ytPlayer && ytPlayer.playVideo) {
+                ytPlayer.unMute();
+                ytPlayer.setVolume(100);
+                ytPlayer.playVideo();
+            }
 
             // Прячем открытку, показываем игру
             document.getElementById('mainCard').style.display = 'none';
