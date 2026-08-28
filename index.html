@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>с др, опг минон роднуля🎉</title>
+    <!-- Подключаем конфетти -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         * { box-sizing: border-box; }
@@ -142,14 +143,30 @@
             margin-bottom: 5px;
             margin-top: 15px;
         }
+
+        /* Скрытый контейнер для видео YouTube */
+        #audioContainer {
+            display: none;
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Плывущий фон -->
     <div class="background-minions"></div>
 
+    <!-- Скрытый плеер YouTube для воспроизведения аудио -->
+    <div id="audioContainer"></div>
+
+    <!-- Основной экран открытки -->
     <div class="container" id="mainCard">
         <div>
+            <!-- Зацикленное видео на главной -->
             <video class="main-media" id="mainGif" autoplay loop muted playsinline>
                 <source src="VID_20260828_010642_561.mp4" type="video/mp4">
             </video>
@@ -164,6 +181,7 @@
         </div>
     </div>
 
+    <!-- Экран успеха с игрой -->
     <div class="container" id="successScreen">
         <h1>уроо с др тебя ари 🥳💛</h1>
         <p style="font-size: 18px;">желаю счастья и всего крутого</p>
@@ -175,6 +193,7 @@
             <div>Рекорд: <span id="highScore">0</span></div>
         </div>
 
+        <!-- Игровое поле -->
         <div class="game-box" id="gameArea" onclick="jump()">
             <img id="minionRunner" src="Picsart_26-08-28_08-20-28-420.png" alt="Миньон">
             <img id="cakeObstacle" src="pngtree-cake-png-image_6224339.png" alt="Торт">
@@ -191,6 +210,10 @@
         }
 
         function acceptGreeting() {
+            // Загружаем и запускаем скрытое видео YouTube со звуком
+            document.getElementById('audioContainer').innerHTML = 
+                '<iframe width="1" height="1" src="https://www.youtube.com/embed/HhHkAlMBabc?autoplay=1&loop=1&playlist=HhHkAlMBabc" frameborder="0" allow="autoplay"></iframe>';
+
             // Прячем открытку, показываем игру
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('successScreen').style.display = 'block';
