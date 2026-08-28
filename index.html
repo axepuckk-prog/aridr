@@ -143,16 +143,6 @@
             margin-bottom: 5px;
             margin-top: 15px;
         }
-
-        /* Прячем плеер за пределами видимости экрана */
-        #hiddenPlayerContainer {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            width: 200px;
-            height: 200px;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
@@ -160,10 +150,8 @@
     <!-- Плывущий фон -->
     <div class="background-minions"></div>
 
-    <!-- Скрытый плеер YouTube -->
-    <div id="hiddenPlayerContainer">
-        <div id="player"></div>
-    </div>
+    <!-- Аудио элемент с вашим файлом -->
+    <audio id="bgMusic" src="Миньоны С днем рождения.mp3" loop preload="auto"></audio>
 
     <!-- Основной экран открытки -->
     <div class="container" id="mainCard">
@@ -186,7 +174,7 @@
     <!-- Экран успеха с игрой -->
     <div class="container" id="successScreen">
         <h1>уроо с др тебя ари 🥳💛</h1>
-        <p style="font-size: 18px;">желаю счастья и всего крутого</p>
+        <p style="font-size: 18px;">всего крутого те, любви, денег и здоровья</p>
         
         <p style="font-size: 14px; color: #666; margin-top: 20px;">тапай по голубому полю, шобы минон прыгал</p>
 
@@ -202,27 +190,8 @@
         </div>
     </div>
 
-    <!-- Загружаем API YouTube -->
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         let yesScale = 1;
-        let ytPlayer;
-
-        // Инициализация API YouTube
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('player', {
-                height: '200',
-                width: '200',
-                videoId: 'HhHkAlMBabc',
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'HhHkAlMBabc',
-                    'playsinline': 1
-                }
-            });
-        }
 
         function rejectGreeting() {
             yesScale += 0.3;
@@ -230,12 +199,9 @@
         }
 
         function acceptGreeting() {
-            // Запускаем звук через API при клике
-            if (ytPlayer && ytPlayer.playVideo) {
-                ytPlayer.unMute();
-                ytPlayer.setVolume(100);
-                ytPlayer.playVideo();
-            }
+            // Включаем mp3
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(e => console.log("Audio play failed:", e));
 
             // Прячем открытку, показываем игру
             document.getElementById('mainCard').style.display = 'none';
