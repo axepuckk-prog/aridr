@@ -92,7 +92,7 @@
         #yesBtn { background-color: #4caf50; color: white; }
         #noBtn { background-color: #f44336; color: white; }
 
-        /* --- Экран игры --- */
+        /* --- Экран успеха с игрой --- */
         #successScreen { display: none; }
 
         .game-box {
@@ -150,16 +150,11 @@
     <!-- Плывущий фон -->
     <div class="background-minions"></div>
 
-    <!-- Аудио элемент с вашим файлом -->
-    <audio id="bgMusic" src="Миньоны С днем рождения.mp3" loop preload="auto"></audio>
-
     <!-- Основной экран открытки -->
     <div class="container" id="mainCard">
         <div>
-            <!-- Зацикленное видео на главной -->
-            <video class="main-media" id="mainGif" autoplay loop muted playsinline>
-                <source src="VID_20260828_010642_561.mp4" type="video/mp4">
-            </video>
+            <!-- Картинка/видео на главной -->
+            <img class="main-media" id="mainGif" src="110647-birthday-minions-free-png-hq.png" alt="Миньоны">
         </div>
 
         <h1>открытка для ари</h1>
@@ -171,12 +166,19 @@
         </div>
     </div>
 
-    <!-- Экран успеха с игрой -->
+    <!-- Экран успеха с новым видео и игрой -->
     <div class="container" id="successScreen">
+        <div>
+            <!-- Новое видео с кнопками управления и звуком -->
+            <video class="main-media" id="congratVideo" loop playsinline controls style="width: 100%; height: auto; max-height: 220px; border-radius: 16px;">
+                <source src="VID_20260828_160355_612.mp4" type="video/mp4">
+            </video>
+        </div>
+
         <h1>уроо с др тебя ари 🥳💛</h1>
-        <p style="font-size: 18px;">всего крутого те, любви, денег и здоровья</p>
+        <p style="font-size: 18px; color: #555; margin: 10px 0;">всего крутого те, любви, денег и здоровья</p>
         
-        <p style="font-size: 14px; color: #666; margin-top: 20px;">тапай по голубому полю, шобы минон прыгал</p>
+        <p style="font-size: 14px; color: #666; margin-top: 15px;">тапай по голубому полю, шобы минон прыгал</p>
 
         <div class="score-board">
             <div>Счет: <span id="score">0</span></div>
@@ -199,13 +201,15 @@
         }
 
         function acceptGreeting() {
-            // Включаем mp3
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("Audio play failed:", e));
-
-            // Прячем открытку, показываем игру
+            // Прячем открытку, показываем экран с видео и игрой
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('successScreen').style.display = 'block';
+
+            // Автоматически запускаем видео
+            const video = document.getElementById('congratVideo');
+            if (video) {
+                video.play().catch(e => console.log("Video play error:", e));
+            }
 
             // Эффект конфетти
             confetti({
