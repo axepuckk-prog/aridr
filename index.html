@@ -153,8 +153,10 @@
     <!-- Основной экран открытки -->
     <div class="container" id="mainCard">
         <div>
-            <!-- Картинка/видео на главной -->
-            <img class="main-media" id="mainGif" src="110647-birthday-minions-free-png-hq.png" alt="Миньоны">
+            <!-- Зацикленное видео-гифка на первом экране -->
+            <video class="main-media" id="mainGif" autoplay loop muted playsinline>
+                <source src="VID_20260828_010642_561.mp4" type="video/mp4">
+            </video>
         </div>
 
         <h1>открытка для ари</h1>
@@ -205,7 +207,7 @@
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('successScreen').style.display = 'block';
 
-            // Автоматически запускаем видео
+            // Автоматически запускаем видео на 2 экране
             const video = document.getElementById('congratVideo');
             if (video) {
                 video.play().catch(e => console.log("Video play error:", e));
