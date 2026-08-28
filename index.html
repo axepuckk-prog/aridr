@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>с др, опг минон роднуля🎉</title>
-    <!-- Подключаем конфетти -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         * { box-sizing: border-box; }
@@ -13,7 +12,6 @@
             margin: 0;
             padding: 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Желтый фон */
             background: linear-gradient(135deg, #fff9c4 0%, #fff176 100%);
             min-height: 100vh;
             display: flex;
@@ -22,7 +20,7 @@
             justify-content: center;
             text-align: center;
             color: #333;
-            overflow: hidden; /* Чтобы миньоны не вылезали за края */
+            overflow: hidden;
             position: relative;
         }
 
@@ -33,12 +31,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Фон под карточкой */
-            opacity: 0.2; /* Делаем их полупрозрачными */
-            background-image: 
-                url('https://media.tenor.com/71239O9p98AAAAAi/minion-minions.gif'),
-                url('https://media.tenor.com/N2s132m82XAAAAAi/minion-what.gif');
-            background-repeat: repeat;
+            z-index: 0;
+            opacity: 0.25;
+            background-image: url('110647-birthday-minions-free-png-hq.png');
+            background-size: 110px;
             animation: moveBackground 20s linear infinite;
         }
 
@@ -49,22 +45,23 @@
 
         /* --- Основная карточка --- */
         .container {
-            background: rgba(255, 255, 255, 0.95); /* Белая, почти непрозрачная */
+            background: rgba(255, 255, 255, 0.95);
             padding: 25px;
             border-radius: 24px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             max-width: 400px;
             width: 100%;
-            z-index: 1; /* Поверх фона */
+            z-index: 1;
             position: relative;
         }
 
-        img.main-gif {
-            max-width: 220px;
-            height: auto;
-            border-radius: 15px;
+        .main-media {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
             margin-bottom: 15px;
-            display: block; /* Гарантирует, что она не схлопнется */
+            border-radius: 16px;
+            display: block;
             margin-left: auto;
             margin-right: auto;
         }
@@ -101,14 +98,12 @@
             position: relative;
             width: 100%;
             height: 200px;
-            background: #e0f7fa; /* Голубое небо в игре */
+            background: #e0f7fa;
             border-radius: 15px;
             border: 3px solid #fbc02d;
             overflow: hidden;
             margin-top: 15px;
             touch-action: manipulation;
-            display: flex;
-            align-items: flex-end; /* Все элементы игры на "земле" */
         }
 
         #minionRunner {
@@ -117,22 +112,18 @@
             position: absolute;
             bottom: 10px;
             left: 20px;
-            /* Прыгающий миньон */
-            background-image: url('https://media.tenor.com/71239O9p98AAAAAi/minion-minions.gif');
-            background-size: cover;
             z-index: 2;
+            object-fit: contain;
         }
 
         #cakeObstacle {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             position: absolute;
             bottom: 10px;
-            right: -40px; /* Изначально за экраном */
-            /* Тортик */
-            background-image: url('https://media.tenor.com/83p1y3U0f1AAAAAi/birthday-cake.gif');
-            background-size: cover;
+            right: -40px;
             z-index: 1;
+            object-fit: contain;
         }
 
         .jump { animation: jumpAnim 0.6s ease-out; }
@@ -155,14 +146,13 @@
 </head>
 <body>
 
-    <!-- Плывущий фон -->
     <div class="background-minions"></div>
 
-    <!-- Основной экран открытки -->
     <div class="container" id="mainCard">
         <div>
-            <!-- НОВАЯ ГИФКА: Праздничный миньон с тортом -->
-            <img id="mainGif" class="main-gif" src="https://media.tenor.com/83p1y3U0f1AAAAAi/birthday-cake.gif" alt="Minion Birthday">
+            <video class="main-media" id="mainGif" autoplay loop muted playsinline>
+                <source src="VID_20260828_010642_561.mp4" type="video/mp4">
+            </video>
         </div>
 
         <h1>открытка для ари</h1>
@@ -174,7 +164,6 @@
         </div>
     </div>
 
-    <!-- Экран успеха с игрой -->
     <div class="container" id="successScreen">
         <h1>уроо с др тебя ари 🥳💛</h1>
         <p style="font-size: 18px;">желаю счастья и всего крутого</p>
@@ -186,33 +175,19 @@
             <div>Рекорд: <span id="highScore">0</span></div>
         </div>
 
-        <!-- Игровое поле -->
         <div class="game-box" id="gameArea" onclick="jump()">
-            <div id="minionRunner"></div>
-            <div id="cakeObstacle"></div>
+            <img id="minionRunner" src="Picsart_26-08-28_08-20-28-420.png" alt="Миньон">
+            <img id="cakeObstacle" src="pngtree-cake-png-image_6224339.png" alt="Торт">
         </div>
     </div>
 
     <script>
         let yesScale = 1;
-        let noClicks = 0;
-        // Гифки, которые будут меняться при нажатии "Нет"
-        const rejectGifs = [
-            "https://media.tenor.com/N2s132m82XAAAAAi/minion-what.gif",
-            "https://media.tenor.com/46V6T6Z_R6YAAAAAi/minions-shocked.gif",
-            "https://media.tenor.com/9HMzOjXLdesAAAAi/ravenclaw-ravenclaw-cat.gif" // Котик
-        ];
 
         function rejectGreeting() {
             // Увеличиваем кнопку "Да"
             yesScale += 0.3;
             document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
-
-            // Меняем гифку на недоумевающую, но НЕ прячем её
-            const gifIndex = noClicks % rejectGifs.length;
-            document.getElementById('mainGif').src = rejectGifs[gifIndex];
-            
-            noClicks++;
         }
 
         function acceptGreeting() {
@@ -220,7 +195,7 @@
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('successScreen').style.display = 'block';
 
-            // Бабах конфетти
+            // Эффект конфетти
             confetti({
                 particleCount: 150,
                 spread: 100,
@@ -245,21 +220,20 @@
                 setTimeout(() => {
                     minion.classList.remove('jump');
                     isJumping = false;
-                }, 600); // Время прыжка
+                }, 600);
             }
         }
 
         function startGame() {
             const cake = document.getElementById('cakeObstacle');
             const minion = document.getElementById('minionRunner');
-            let cakePos = 400; // Стартовая позиция торта (за краем)
+            let cakePos = 350;
 
             gameInterval = setInterval(() => {
-                cakePos -= 6; // Скорость торта
+                cakePos -= 5;
                 
-                // Если торт улетел влево
                 if (cakePos < -40) {
-                    cakePos = 380; // Возвращаем на старт
+                    cakePos = 350;
                     score++;
                     document.getElementById('score').innerText = score;
                     if (score > highScore) {
@@ -267,23 +241,16 @@
                         document.getElementById('highScore').innerText = highScore;
                     }
                 }
-                cake.style.left = cakePos + 'px'; // Двигаем торт
+                cake.style.left = cakePos + 'px';
 
-                // --- Проверка столкновения ---
-                // Получаем текущую высоту миньона
                 const minionBottom = parseInt(window.getComputedStyle(minion).getPropertyValue('bottom'));
                 
-                // Условия столкновения (торт в зоне миньона AND миньон не прыгнул)
-                if (cakePos > 20 && cakePos < 65 && minionBottom < 45) {
-                    // Столкновение! Сброс.
+                if (cakePos > 20 && cakePos < 60 && minionBottom < 40) {
                     score = 0;
                     document.getElementById('score').innerText = score;
-                    cakePos = 380; // Торт на старт
-                    
-                    // Небольшой эффект сброса (конфетти)
-                    confetti({ particleCount: 20, spread: 30, origin: { y: 0.9 } });
+                    cakePos = 350;
                 }
-            }, 20); // Частота обновления (fps)
+            }, 20);
         }
     </script>
 </body>
